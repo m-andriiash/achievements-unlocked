@@ -280,6 +280,16 @@
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 .achievements-unlocked button.au-unlock:hover { background: linear-gradient(180deg, #fff1b0, #e8b52a); }
+/* Each window part renders one root element; make it fill the window so lists can scroll. */
+.au-manager-body,
+.au-trophy-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+.au-manager-body .au-list,
+.au-trophy-body .au-grid { flex: 1; min-height: 0; overflow-y: auto; }
 .achievements-unlocked .form-footer { display: flex; gap: 8px; margin-top: 12px; }
 .achievements-unlocked .form-footer button { flex: 1; }
 

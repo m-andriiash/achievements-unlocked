@@ -169,8 +169,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
     icon: "fas fa-trophy",
     button: true,
     visible: true,
-    onChange: open,
-    onClick: open
+    onChange: open
   };
   if (Array.isArray(controls)) {
     controls.find((c) => c.name === "token")?.tools.push(tool);
