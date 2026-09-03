@@ -1,0 +1,17 @@
+<div class="au-chat-card">
+  <div class="au-chat-head">
+    {{> "achievements-unlocked.badge" img=img size="sm"}}
+    <div>
+      <div class="au-toast-header">{{header}}</div>
+      <div class="au-chat-name">{{name}}</div>
+    </div>
+  </div>
+  <div class="au-chat-desc">{{description}}</div>
+  <div class="au-chat-who">
+    {{#each recipients}}
+      <span class="au-chip" style="border-color: {{color}}">
+        <img src="{{avatar}}" alt="">{{name}}{{#if character}} <span class="au-muted">({{character}})</span>{{/if}}
+      </span>
+    {{/each}}
+  </div>
+</div>

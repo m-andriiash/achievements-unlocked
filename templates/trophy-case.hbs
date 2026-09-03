@@ -1,0 +1,23 @@
+<div class="au-progress">
+  <span class="au-progress-text"><i class="fas fa-trophy"></i> {{progressText}}</span>
+  <div class="au-progress-bar"><div class="au-progress-fill" style="width: {{percent}}%"></div></div>
+</div>
+
+<div class="au-grid">
+  {{#if nothingUnlocked}}
+    <p class="au-empty au-grid-span">{{localize "ACHIEVEMENTS.TrophyCase.Empty"}}</p>
+  {{/if}}
+
+  {{#each items}}
+    <div class="au-trophy{{#unless unlocked}} au-trophy-locked{{/unless}}" data-id="{{id}}">
+      {{> "achievements-unlocked.badge" img=img size="lg" badgeLocked=locked badgeHidden=secret}}
+      <div class="au-trophy-name">{{name}}</div>
+      <div class="au-trophy-desc">{{description}}</div>
+      {{#if unlocked}}
+        <div class="au-trophy-date">{{unlockedLabel}}</div>
+      {{else}}
+        <div class="au-trophy-date au-muted"><i class="fas fa-lock"></i> {{localize "ACHIEVEMENTS.TrophyCase.Locked"}}</div>
+      {{/if}}
+    </div>
+  {{/each}}
+</div>

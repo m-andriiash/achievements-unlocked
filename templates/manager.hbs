@@ -1,0 +1,46 @@
+<div class="au-toolbar">
+  <input type="search" class="au-search" placeholder="{{localize "ACHIEVEMENTS.Manager.Search"}}" value="{{search}}">
+  <button type="button" class="au-primary" data-action="create">
+    <i class="fas fa-plus"></i> {{localize "ACHIEVEMENTS.Manager.New"}}
+  </button>
+</div>
+
+<div class="au-list">
+  {{#if empty}}
+    <p class="au-empty">{{localize "ACHIEVEMENTS.Manager.Empty"}}</p>
+  {{/if}}
+
+  {{#each achievements}}
+    <div class="au-card" data-id="{{id}}" data-search="{{searchText}}">
+      {{> "achievements-unlocked.badge" img=img size="md"}}
+      <div class="au-card-body">
+        <div class="au-card-title">
+          <span class="au-card-name">{{name}}</span>
+          {{#if hidden}}<span class="au-tag"><i class="fas fa-eye-slash"></i> {{localize "ACHIEVEMENTS.Manager.Hidden"}}</span>{{/if}}
+        </div>
+        <div class="au-card-desc">{{description}}</div>
+        <div class="au-card-owners">
+          {{#if owners.length}}
+            {{#each owners}}
+              <img class="au-avatar" src="{{avatar}}" alt="" data-tooltip="{{name}}" style="border-color: {{color}}">
+            {{/each}}
+            <span class="au-muted">{{ownersLabel}}</span>
+          {{else}}
+            <span class="au-muted">{{localize "ACHIEVEMENTS.Manager.UnlockedByNone"}}</span>
+          {{/if}}
+        </div>
+      </div>
+      <div class="au-card-actions">
+        <button type="button" class="au-unlock" data-action="grant">
+          <i class="fas fa-unlock"></i> {{localize "ACHIEVEMENTS.Manager.Unlock"}}
+        </button>
+        <div class="au-card-icons">
+          <button type="button" class="au-icon" data-action="edit" data-tooltip="{{localize "ACHIEVEMENTS.Manager.Edit"}}"><i class="fas fa-pen"></i></button>
+          <button type="button" class="au-icon au-danger" data-action="delete" data-tooltip="{{localize "ACHIEVEMENTS.Manager.Delete"}}"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    </div>
+  {{/each}}
+
+  <p class="au-empty au-no-match" hidden>{{localize "ACHIEVEMENTS.Manager.EmptySearch"}}</p>
+</div>

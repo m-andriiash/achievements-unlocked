@@ -1,0 +1,7 @@
+{{!-- Round gold-ring badge. Params: img, size (sm|md|lg), badgeLocked, badgeHidden --}}
+<div class="au-badge au-badge-{{size}}{{#if badgeLocked}} au-badge-locked{{/if}}{{#if badgeHidden}} au-badge-hidden{{/if}}">
+  <div class="au-badge-inner">
+    {{#if badgeHidden}}<span class="au-badge-q">?</span>{{else}}<img src="{{img}}" alt="">{{/if}}
+  </div>
+  {{#if badgeLocked}}<i class="fas fa-lock au-badge-lock"></i>{{/if}}
+</div>

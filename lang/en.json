@@ -1,0 +1,90 @@
+{
+  "ACHIEVEMENTS": {
+    "ToolTitle": "Achievements",
+    "ChatAlias": "Achievements",
+    "Api": {
+      "GMOnly": "Only a Gamemaster can manage achievements.",
+      "NotFound": "Achievement not found.",
+      "AlreadyOwned": "Everyone selected already has this achievement.",
+      "NoUsers": "No players selected."
+    },
+    "Settings": {
+      "ChatCard": { "Name": "Post a chat card", "Hint": "Post a permanent chat message every time an achievement is unlocked." },
+      "ShowLocked": { "Name": "Show locked achievements", "Hint": "Players see achievements they have not unlocked yet, greyed out, in their trophy case. Hidden achievements always stay secret until unlocked." },
+      "ToastDuration": { "Name": "Popup duration (seconds)", "Hint": "How long the \"Achievement unlocked!\" popup stays on screen." },
+      "ToastPosition": { "Name": "Popup position", "Hint": "Where the popup appears on screen.", "Top": "Top centre", "BottomRight": "Bottom right" },
+      "Sound": { "Name": "Play unlock sound", "Hint": "Play a chime when an achievement is unlocked. Per-client setting." },
+      "SoundFile": { "Name": "Unlock sound file", "Hint": "Audio file played on unlock. Leave the default for the built-in chime." },
+      "ShowCharacterName": { "Name": "Show character names", "Hint": "Show the character a player controls next to their name, e.g. \"Bob (Thorin)\"." },
+      "Sparkle": { "Name": "Sparkle effect", "Hint": "Shine sweep and badge animation on the popup." }
+    },
+    "Manager": {
+      "Title": "Achievements",
+      "New": "New achievement",
+      "Search": "Search…",
+      "Empty": "No achievements yet. Create the first one!",
+      "EmptySearch": "Nothing matches your search.",
+      "UnlockedBy": "Unlocked by {count}",
+      "UnlockedByNone": "Not unlocked yet",
+      "Hidden": "Hidden",
+      "Unlock": "Unlocked!",
+      "Edit": "Edit",
+      "Delete": "Delete",
+      "DeleteTitle": "Delete achievement",
+      "DeleteConfirm": "Delete <strong>{name}</strong>? Players who unlocked it will lose it from their trophy case.",
+      "Deleted": "Achievement \"{name}\" deleted."
+    },
+    "Editor": {
+      "TitleCreate": "New achievement",
+      "TitleEdit": "Edit achievement",
+      "Name": "Name",
+      "NamePlaceholder": "Dragon Slayer",
+      "Description": "Description",
+      "DescriptionPlaceholder": "Landed the killing blow on an adult dragon.",
+      "Image": "Badge image",
+      "ImagePlaceholder": "Leave empty for the default star",
+      "Browse": "Browse",
+      "Hidden": "Hidden achievement",
+      "HiddenHint": "Players can't see it in the trophy case until they unlock it.",
+      "Preview": "Preview",
+      "Save": "Save",
+      "Create": "Create",
+      "Cancel": "Cancel",
+      "NameRequired": "Give the achievement a name.",
+      "Created": "Achievement \"{name}\" created.",
+      "Saved": "Achievement \"{name}\" saved."
+    },
+    "Grant": {
+      "Title": "Unlock: {name}",
+      "Who": "Who earned it?",
+      "SelectAll": "Select all",
+      "Owned": "already unlocked",
+      "Offline": "offline",
+      "Reannounce": "Announce again for players who already have it",
+      "Unlock": "Unlock!",
+      "Cancel": "Cancel",
+      "NoPlayers": "There are no player users in this world yet.",
+      "Done": "\"{name}\" unlocked for {names}."
+    },
+    "TrophyCase": {
+      "Title": "{name}'s achievements",
+      "Progress": "{unlocked} / {total} unlocked",
+      "Empty": "Nothing unlocked yet. Go be legendary.",
+      "UnlockedOn": "Unlocked {date}",
+      "Locked": "Locked",
+      "HiddenName": "???",
+      "HiddenDescription": "A secret achievement. Unlock it to find out."
+    },
+    "Toast": {
+      "Header": "Achievement unlocked!",
+      "More": "{names} & {count} more"
+    },
+    "Context": {
+      "Unlock": "Unlock achievement…",
+      "TrophyCase": "View achievements"
+    },
+    "Chat": {
+      "Header": "Achievement unlocked!"
+    }
+  }
+}

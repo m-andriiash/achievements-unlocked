@@ -1,0 +1,46 @@
+<div class="au-grant-head">
+  {{> "achievements-unlocked.badge" img=achievement.img size="md"}}
+  <div>
+    <div class="au-card-name">{{achievement.name}}</div>
+    <div class="au-card-desc">{{achievement.description}}</div>
+  </div>
+</div>
+
+<div class="au-grant-who">{{localize "ACHIEVEMENTS.Grant.Who"}}</div>
+
+{{#if noPlayers}}
+  <p class="au-empty">{{localize "ACHIEVEMENTS.Grant.NoPlayers"}}</p>
+{{else}}
+  <label class="au-player au-select-all">
+    <input type="checkbox" class="au-select-all-box">
+    <strong>{{localize "ACHIEVEMENTS.Grant.SelectAll"}}</strong>
+  </label>
+
+  <ul class="au-players">
+    {{#each players}}
+      <li class="au-player{{#unless active}} au-offline{{/unless}}{{#if owned}} au-owned{{/if}}">
+        <label>
+          <input type="checkbox" name="user" value="{{id}}" {{checked checked}} {{#if owned}}data-owned="1" disabled{{/if}}>
+          <img class="au-avatar" src="{{avatar}}" alt="" style="border-color: {{color}}">
+          <span class="au-player-name">
+            {{name}}{{#if character}} <span class="au-muted">({{character}})</span>{{/if}}
+          </span>
+          {{#if owned}}<span class="au-tag au-tag-ok"><i class="fas fa-check"></i> {{localize "ACHIEVEMENTS.Grant.Owned"}}</span>{{/if}}
+          {{#unless active}}<span class="au-tag">{{localize "ACHIEVEMENTS.Grant.Offline"}}</span>{{/unless}}
+        </label>
+      </li>
+    {{/each}}
+  </ul>
+
+  <label class="au-reannounce">
+    <input type="checkbox" name="reannounce">
+    <span>{{localize "ACHIEVEMENTS.Grant.Reannounce"}}</span>
+  </label>
+{{/if}}
+
+<footer class="form-footer">
+  <button type="button" data-action="cancel">{{localize "ACHIEVEMENTS.Grant.Cancel"}}</button>
+  <button type="submit" class="au-primary au-unlock" {{#if noPlayers}}disabled{{/if}}>
+    <i class="fas fa-unlock"></i> {{localize "ACHIEVEMENTS.Grant.Unlock"}}
+  </button>
+</footer>

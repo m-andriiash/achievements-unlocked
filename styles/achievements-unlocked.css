@@ -1,0 +1,419 @@
+/* Achievements Unlocked — styles
+ * Prefix: .au-  (module windows also carry .achievements-unlocked)
+ */
+
+:root {
+  --au-gold: #f0c34a;
+  --au-gold-deep: #9a6b0a;
+  --au-gold-light: #fff1b0;
+  --au-ink: #120e07;
+  --au-ink-soft: #2a2113;
+  --au-parchment: #f4e9cf;
+  --au-parchment-muted: #d9cdb0;
+  --au-ring: conic-gradient(from 210deg, #fff1b0, #c9962b, #f7dc8a, #8f6410, #ffe89a, #c9962b, #fff1b0);
+  --au-font-display: "Modesto Condensed", var(--font-h1, "Signika"), serif;
+}
+
+/* -------------------------------------------- */
+/*  Badge (shared by every view)                */
+/* -------------------------------------------- */
+
+.au-badge {
+  position: relative;
+  flex: none;
+  border-radius: 50%;
+  padding: 4px;
+  background: var(--au-ring);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+.au-badge-sm { width: 44px; height: 44px; padding: 3px; }
+.au-badge-md { width: 64px; height: 64px; }
+.au-badge-lg { width: 88px; height: 88px; padding: 5px; }
+
+.au-badge-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 40%, #3a2a0a, #120d03);
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.7);
+}
+.au-badge-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+  display: block;
+}
+.au-badge-q {
+  font-family: var(--au-font-display);
+  font-size: 2.2em;
+  line-height: 1;
+  color: #d8b45a;
+  text-shadow: 0 1px 2px #000;
+}
+.au-badge-sm .au-badge-q { font-size: 1.4em; }
+
+.au-badge-locked {
+  filter: grayscale(1) brightness(0.65);
+  opacity: 0.6;
+}
+.au-badge-lock {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: #eee;
+  background: #222;
+  border: 2px solid #555;
+}
+
+/* -------------------------------------------- */
+/*  Unlock popup                                */
+/* -------------------------------------------- */
+
+.au-toast {
+  position: fixed;
+  z-index: 10000;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  width: 480px;
+  max-width: calc(100vw - 32px);
+  padding: 12px 18px 12px 12px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--au-ink-soft) 0%, var(--au-ink) 60%, #1d1609 100%);
+  border: 1px solid #c9a24a;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 235, 170, 0.25);
+  color: var(--au-parchment);
+  font-family: var(--font-primary, "Signika", sans-serif);
+  cursor: pointer;
+  overflow: hidden;
+  opacity: 0;
+  transition: transform 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2), opacity 0.4s ease;
+}
+.au-toast.au-pos-top { top: 24px; left: 50%; transform: translate(-50%, -160%); }
+.au-toast.au-pos-top.au-show { transform: translate(-50%, 0); opacity: 1; }
+.au-toast.au-pos-top.au-leave {
+  transform: translate(-50%, -160%);
+  opacity: 0;
+  transition: transform 0.45s ease-in, opacity 0.3s ease;
+}
+.au-toast.au-pos-bottom-right { right: 24px; bottom: 24px; transform: translateX(130%); }
+.au-toast.au-pos-bottom-right.au-show { transform: none; opacity: 1; }
+.au-toast.au-pos-bottom-right.au-leave {
+  transform: translateX(130%);
+  opacity: 0;
+  transition: transform 0.45s ease-in, opacity 0.3s ease;
+}
+
+.au-toast-badge { flex: none; }
+.au-toast-body { flex: 1; min-width: 0; }
+.au-toast-header {
+  font-family: var(--au-font-display);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--au-gold);
+}
+.au-toast-header i { margin-right: 4px; }
+.au-toast-name {
+  font-family: var(--au-font-display);
+  font-size: 24px;
+  line-height: 1.1;
+  color: #fff8e6;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  margin: 2px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.au-toast-desc {
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--au-parchment-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.au-toast-who {
+  margin-top: 4px;
+  font-size: 12px;
+  font-style: italic;
+  text-align: right;
+  color: #e6c76a;
+}
+
+/* shine sweep + badge pop */
+.au-toast.au-sparkle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 240, 190, 0.3) 45%,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(255, 240, 190, 0.3) 55%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+}
+.au-toast.au-sparkle.au-show::after { animation: au-shine 1.4s ease-out 0.45s 1 forwards; }
+.au-toast.au-sparkle.au-show .au-badge { animation: au-pop 0.6s cubic-bezier(0.3, 1.6, 0.5, 1) 0.25s both; }
+
+@keyframes au-shine {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(120%); }
+}
+@keyframes au-pop {
+  from { transform: scale(0.4) rotate(-15deg); }
+  to { transform: scale(1) rotate(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-toast { transition: opacity 0.3s ease; }
+  .au-toast.au-pos-top,
+  .au-toast.au-pos-top.au-leave { transform: translate(-50%, 0); }
+  .au-toast.au-pos-bottom-right,
+  .au-toast.au-pos-bottom-right.au-leave { transform: none; }
+  .au-toast.au-sparkle.au-show::after,
+  .au-toast.au-sparkle.au-show .au-badge { animation: none; }
+}
+
+/* -------------------------------------------- */
+/*  Chat card                                   */
+/* -------------------------------------------- */
+
+.au-chat-card {
+  background: linear-gradient(135deg, var(--au-ink-soft), var(--au-ink));
+  border: 1px solid #c9a24a;
+  border-radius: 10px;
+  padding: 8px 10px;
+  color: var(--au-parchment);
+}
+.au-chat-head { display: flex; gap: 10px; align-items: center; min-width: 0; }
+.au-chat-name {
+  font-family: var(--au-font-display);
+  font-size: 1.5em;
+  line-height: 1.1;
+  color: #fff8e6;
+}
+.au-chat-desc { margin: 6px 0; font-size: 0.92em; color: var(--au-parchment-muted); }
+.au-chat-who { display: flex; flex-wrap: wrap; gap: 4px; }
+.au-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid;
+  border-radius: 12px;
+  padding: 1px 8px 1px 2px;
+  font-size: 0.85em;
+  background: rgba(255, 255, 255, 0.06);
+}
+.au-chip img {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  object-fit: cover;
+}
+
+/* -------------------------------------------- */
+/*  Shared bits inside module windows           */
+/* -------------------------------------------- */
+
+.achievements-unlocked .au-muted { opacity: 0.7; }
+.achievements-unlocked .au-empty {
+  text-align: center;
+  padding: 24px 12px;
+  opacity: 0.7;
+  font-style: italic;
+}
+.achievements-unlocked .au-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72em;
+  font-weight: normal;
+  padding: 1px 7px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.15);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.achievements-unlocked .au-tag-ok { background: rgba(40, 140, 60, 0.25); }
+.achievements-unlocked .au-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid;
+  flex: none;
+}
+.achievements-unlocked button.au-icon {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  line-height: 1;
+}
+.achievements-unlocked button.au-icon i { margin: 0; }
+.achievements-unlocked button.au-danger:hover { color: #c0392b; }
+.achievements-unlocked button.au-unlock {
+  background: linear-gradient(180deg, #ffe58a, #d9a520);
+  border: 1px solid #8f6410;
+  color: #2a1d05;
+  font-weight: bold;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+.achievements-unlocked button.au-unlock:hover { background: linear-gradient(180deg, #fff1b0, #e8b52a); }
+.achievements-unlocked .form-footer { display: flex; gap: 8px; margin-top: 12px; }
+.achievements-unlocked .form-footer button { flex: 1; }
+
+/* -------------------------------------------- */
+/*  Manager                                     */
+/* -------------------------------------------- */
+
+.au-manager .au-toolbar { display: flex; gap: 8px; margin-bottom: 8px; }
+.au-manager .au-search { flex: 1; }
+.au-manager .au-toolbar button { flex: 0 0 auto; width: auto; padding: 0 12px; }
+.au-manager .au-list { display: flex; flex-direction: column; gap: 8px; }
+
+.au-card {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.05);
+}
+.theme-dark .au-card { border-color: rgba(255, 255, 255, 0.15); background: rgba(255, 255, 255, 0.05); }
+.au-card-body { flex: 1; min-width: 0; }
+.au-card-title { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.au-card-name { font-weight: bold; font-size: 1.1em; }
+.au-card-desc { font-size: 0.92em; opacity: 0.85; }
+.au-card-owners { display: flex; align-items: center; gap: 4px; margin-top: 6px; font-size: 0.85em; flex-wrap: wrap; }
+.au-card-owners .au-avatar { width: 22px; height: 22px; }
+.au-card-actions { display: flex; flex-direction: column; gap: 6px; align-items: stretch; flex: none; }
+.au-card-actions .au-unlock { width: auto; padding: 0 14px; white-space: nowrap; }
+.au-card-icons { display: flex; gap: 4px; justify-content: center; }
+
+/* -------------------------------------------- */
+/*  Editor                                      */
+/* -------------------------------------------- */
+
+.au-editor .au-editor-grid { display: flex; gap: 16px; align-items: flex-start; }
+.au-editor .au-editor-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding-top: 4px;
+  flex: none;
+}
+.au-editor .au-editor-fields { flex: 1; min-width: 0; }
+.au-editor textarea { resize: vertical; min-height: 60px; }
+
+/* -------------------------------------------- */
+/*  Grant dialog                                */
+/* -------------------------------------------- */
+
+.au-grant .au-grant-head { display: flex; gap: 12px; align-items: center; margin-bottom: 10px; min-width: 0; }
+.au-grant .au-grant-who { font-weight: bold; margin: 8px 0 4px; }
+.au-grant .au-players {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 320px;
+  overflow: auto;
+}
+.au-grant .au-player label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.au-grant .au-player label:hover { background: rgba(0, 0, 0, 0.07); }
+.theme-dark .au-grant .au-player label:hover { background: rgba(255, 255, 255, 0.07); }
+.au-grant .au-player-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.au-grant .au-offline { opacity: 0.6; }
+.au-grant .au-owned label { cursor: default; }
+.au-grant .au-select-all {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+.au-grant .au-reannounce {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+/* -------------------------------------------- */
+/*  Trophy case                                 */
+/* -------------------------------------------- */
+
+.au-trophy-case .au-progress { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+.au-trophy-case .au-progress-text { font-weight: bold; }
+.au-trophy-case .au-progress-text i { color: var(--au-gold-deep); margin-right: 4px; }
+.au-trophy-case .au-progress-bar { height: 8px; border-radius: 4px; background: rgba(0, 0, 0, 0.2); overflow: hidden; }
+.au-trophy-case .au-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #b8860b, #f7d774);
+  transition: width 0.4s ease;
+}
+.au-trophy-case .au-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+.au-trophy-case .au-grid-span { grid-column: 1 / -1; }
+.au-trophy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  padding: 12px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.05);
+}
+.theme-dark .au-trophy { border-color: rgba(255, 255, 255, 0.15); background: rgba(255, 255, 255, 0.05); }
+.au-trophy-locked { opacity: 0.75; }
+.au-trophy-name { font-weight: bold; margin-top: 4px; }
+.au-trophy-desc {
+  font-size: 0.8em;
+  opacity: 0.8;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.au-trophy-date { font-size: 0.75em; color: var(--au-gold-deep); }

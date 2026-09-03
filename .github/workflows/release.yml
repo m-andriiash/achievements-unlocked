@@ -1,0 +1,47 @@
+name: Release
+
+# Push a tag like v0.1.0 and this workflow stamps the version + download URL
+# into module.json, zips the module, and publishes a GitHub release whose
+# assets back the two install URLs:
+#   manifest: .../releases/latest/download/module.json
+#   download: .../releases/download/v<version>/achievements-unlocked-<version>.zip
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Stamp version and URLs into module.json
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          jq --arg v "$VERSION" \
+             --arg url "https://github.com/${GITHUB_REPOSITORY}" \
+             --arg mf "https://github.com/${GITHUB_REPOSITORY}/releases/latest/download/module.json" \
+             --arg dl "https://github.com/${GITHUB_REPOSITORY}/releases/download/v${VERSION}/achievements-unlocked-${VERSION}.zip" \
+             '.version = $v | .url = $url | .manifest = $mf | .download = $dl' \
+             module.json > module.json.tmp
+          mv module.json.tmp module.json
+
+      - name: Build zip
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          zip -r "achievements-unlocked-${VERSION}.zip" \
+            module.json README.md INSTALL.md LICENSE lang scripts styles templates assets
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          gh release create "$GITHUB_REF_NAME" \
+            "achievements-unlocked-${VERSION}.zip" module.json \
+            --title "Achievements Unlocked ${VERSION}" \
+            --generate-notes

@@ -1,0 +1,53 @@
+<div class="au-editor-grid">
+  <div class="au-editor-preview">
+    <div class="au-preview-badge">
+      {{> "achievements-unlocked.badge" img=achievement.img size="lg"}}
+    </div>
+    <span class="au-muted">{{localize "ACHIEVEMENTS.Editor.Preview"}}</span>
+  </div>
+
+  <div class="au-editor-fields standard-form">
+    <div class="form-group">
+      <label for="{{id}}-name">{{localize "ACHIEVEMENTS.Editor.Name"}}</label>
+      <div class="form-fields">
+        <input type="text" id="{{id}}-name" name="name" value="{{achievement.name}}" maxlength="{{nameMax}}"
+               placeholder="{{localize "ACHIEVEMENTS.Editor.NamePlaceholder"}}" required autofocus autocomplete="off">
+      </div>
+    </div>
+
+    <div class="form-group stacked">
+      <label for="{{id}}-description">{{localize "ACHIEVEMENTS.Editor.Description"}}</label>
+      <div class="form-fields">
+        <textarea id="{{id}}-description" name="description" rows="3" maxlength="{{descriptionMax}}"
+                  placeholder="{{localize "ACHIEVEMENTS.Editor.DescriptionPlaceholder"}}">{{achievement.description}}</textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="{{id}}-img">{{localize "ACHIEVEMENTS.Editor.Image"}}</label>
+      <div class="form-fields">
+        <input type="text" id="{{id}}-img" name="img" value="{{imgValue}}"
+               placeholder="{{localize "ACHIEVEMENTS.Editor.ImagePlaceholder"}}" autocomplete="off">
+        <button type="button" class="au-icon" data-action="browse" data-tooltip="{{localize "ACHIEVEMENTS.Editor.Browse"}}">
+          <i class="fas fa-file-import"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="{{id}}-hidden">{{localize "ACHIEVEMENTS.Editor.Hidden"}}</label>
+      <div class="form-fields">
+        <input type="checkbox" id="{{id}}-hidden" name="hidden" {{checked achievement.hidden}}>
+      </div>
+      <p class="hint">{{localize "ACHIEVEMENTS.Editor.HiddenHint"}}</p>
+    </div>
+  </div>
+</div>
+
+<footer class="form-footer">
+  <button type="button" data-action="cancel">{{localize "ACHIEVEMENTS.Editor.Cancel"}}</button>
+  <button type="submit" class="au-primary">
+    <i class="fas fa-save"></i>
+    {{#if isNew}}{{localize "ACHIEVEMENTS.Editor.Create"}}{{else}}{{localize "ACHIEVEMENTS.Editor.Save"}}{{/if}}
+  </button>
+</footer>
